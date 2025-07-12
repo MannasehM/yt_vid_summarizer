@@ -1,4 +1,4 @@
-# 🎥 YouTube Video Summarizer & Q&A (Local, Free)
+## 🎥 YouTube Video Summarizer & Q&A (Local, Free)
 
 This Python project lets you:
 - Download a YouTube video transcript
@@ -7,8 +7,6 @@ This Python project lets you:
 - Ask unlimited questions about the content
 
 Runs 100% locally — no paid API keys.
-
----
 
 ## 🚀 Features
 
