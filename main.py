@@ -3,19 +3,37 @@ from youtube_transcript_api import YouTubeTranscriptApi
 from transformers import pipeline
 
 def get_video_id(url_link):
-    return url_link.split('watch?v=')[-1]
+    video_id_and_timestamp = url_link.split('watch?v=')[-1]
+    return video_id_and_timestamp.split('&')[0]
 
 # 1️. Get transcript
 video_link = input('Enter a YouTube link: ')
 video_id = get_video_id(video_link)
-transcript = YouTubeTranscriptApi.get_transcript(video_id)
-raw_text = " ".join([entry['text'] for entry in transcript])
+print("video_id: " + video_id)
+print(type(video_id))
+
+ytt_api = YouTubeTranscriptApi()
+fetched_transcript = ytt_api.fetch(video_id)
+
+raw_text = ""
+for snippet in fetched_transcript:
+    raw_text += snippet.text + " "
+raw_text = raw_text[:-1]
+
+# transcript = YouTubeTranscriptApi.fetch(video_id).to_raw_data()
+# raw_text = " ".join([entry['text'] for entry in transcript])
 
 # 2️. Restore punctuation
-model, example_texts, languages, punct, apply_te = torch.hub.load('snakers4/silero-models', 'silero_te')
-punctuated_text = apply_te(raw_text, lan='en')
-print("\n✅ Preview of punctuated text:\n")
-print(punctuated_text[:300])
+# model, example_texts, languages, punct, apply_te = torch.hub.load('snakers4/silero-models', 'silero_te')
+# if not raw_text: 
+#     print("Error: raw_text is empty!")
+# else: 
+#     print(raw_text)
+#     punctuated_text = apply_te(raw_text, lan='en')
+#     print("\n✅ Preview of punctuated text:\n")
+#     print(punctuated_text[:300])
+punctuated_text = raw_text
+
 
 # 3️. Generate summary
 print("\n⏳ Generating summary...")
@@ -49,42 +67,3 @@ while True:
         'context': punctuated_text
     })
     print("Answer:", result['answer'])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
