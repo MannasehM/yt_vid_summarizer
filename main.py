@@ -30,7 +30,7 @@ raw_text = raw_text[:-1]
 # else: 
 #     print(raw_text)
 #     punctuated_text = apply_te(raw_text, lan='en')
-#     print("\n✅ Preview of punctuated text:\n")
+#     print("\n Preview of punctuated text:\n")
 #     print(punctuated_text[:300])
 punctuated_text = raw_text
 
@@ -48,13 +48,13 @@ for i in range(0, len(punctuated_text), max_chunk):
 
 full_summary = " ".join(summary_texts)
 
-print("\n✅ Summary:\n")
+print("\n Summary:\n")
 print(full_summary)
 
 # 4️. Unlimited Q&A loop
 qa_pipeline = pipeline("question-answering", model="deepset/roberta-base-squad2")
 
-print("\n✅ Ask me anything about the video! Type 'quit' to exit.\n")
+print("\n Ask me anything about the video! Type 'quit' to exit.\n")
 
 while True:
     question = input("Your question: ")
